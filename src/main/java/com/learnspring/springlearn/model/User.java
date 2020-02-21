@@ -1,4 +1,4 @@
-package com.LearnSpring.springLearn.model;
+package com.learnspring.springlearn.model;
 
 public class User {
 
