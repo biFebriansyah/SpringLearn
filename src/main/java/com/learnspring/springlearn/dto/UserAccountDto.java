@@ -6,6 +6,7 @@ public class UserAccountDto {
         private String email;
         private String password;
         private String name;
+        private String token;
 
         public long getId() {
                 return id;
@@ -38,4 +39,12 @@ public class UserAccountDto {
         public void setName(String name) {
                 this.name = name;
         }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 }

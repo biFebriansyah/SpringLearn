@@ -6,8 +6,9 @@ import com.learnspring.springlearn.repository.UserAccountRepository;
 import com.learnspring.springlearn.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserAccountServiceImpl implements UserAccountService {
@@ -17,22 +18,36 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Override
     public List<UserAccount> get() {
-        return null;
+        List<UserAccount> result = new ArrayList<>();
+        userAccountRepository.findAll().iterator().forEachRemaining(result::add);
+        return result;
     }
 
     @Override
     public UserAccount getById(long id) {
-        return null;
+        return userAccountRepository.findById(id).get();
     }
 
     @Override
     public UserAccount update(long id, UserAccountDto dto) {
-        return null;
+        Optional<UserAccount> ua = userAccountRepository.findById(id);
+        if (ua.get() != null) {
+            UserAccount up = ua.get();
+            up.setName(dto.getName());
+            up.setEmail(dto.getEmail());
+            up.setId(dto.getId());
+            userAccountRepository.save(up);
+            return up;
+        }
+        else {
+            return null;
+        }
     }
 
     @Override
-    public UserAccount delete(long id) {
-        return null;
+    public String delete(long id) {
+        userAccountRepository.deleteById(id);
+        return "Seccses";
     }
 
     @Override
@@ -42,7 +57,6 @@ public class UserAccountServiceImpl implements UserAccountService {
         ua.setName(name);
         ua.setPassword(password); // we will encrypt the password later
         userAccountRepository.save(ua);
-
         return ua;
     }
 }
